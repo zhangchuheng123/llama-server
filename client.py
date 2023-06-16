@@ -388,7 +388,7 @@ Description:
 
 Actions:
 """
-url = f"localhost/openai/deployments/{gpt_model}/chat/completions?api-version=2023-03-15-preview"
+
 api_key = "653880d85b6e4a209206c263d7c3cc7a"
 headers = {"Content-Type": "application/json", "api-key": api_key}
 data = {
