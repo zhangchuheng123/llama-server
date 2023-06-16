@@ -7,12 +7,14 @@ from torch.nn.parallel import DistributedDataParallel as DDP
 from transformers import AutoTokenizer, LlamaForCausalLM
 from flask import Flask, request, jsonify
 
+app = Flask(__name__)
+
 # Set up Llama model
 def load_model(ckpt_dir: str, tokenizer_path: str): 
     
     start_time = time.time()
     generator = LlamaForCausalLM.from_pretrained(ckpt_dir).half()
-    generator = generator.to("cuda:1")
+    generator = generator.to("cuda:0")
     tokenizer = AutoTokenizer.from_pretrained(tokenizer_path)
     
     print("Model loaded.")
@@ -55,5 +57,4 @@ if __name__ == "__main__":
         tokenizer_path="/home/guangran/decapoda-research/llama-7b-hf")
 
     # Start server
-    app = Flask(__name__)
     app.run(host='0.0.0.0', port=5330)
