@@ -1,4 +1,3 @@
-import socket
 import os
 import time
 import torch
@@ -6,6 +5,7 @@ import argparse
 import torch.distributed as dist
 from torch.nn.parallel import DistributedDataParallel as DDP
 from transformers import AutoTokenizer, LlamaForCausalLM
+from flask import Flask, request, jsonify
 
 # Set up Llama model
 def load_model(ckpt_dir: str, tokenizer_path: str): 
@@ -20,14 +20,9 @@ def load_model(ckpt_dir: str, tokenizer_path: str):
     return generator, tokenizer
 
 # Function to generate a response using Llama
-def generate_response(message,
-                      generator, 
-                      tokenizer,                      
-                      temperature: float = 0.8,
-                      top_p: float = 0.95,
-                      max_seq_len: int = 128,
-                      max_batch_size: int = 32
-                      ):
+def generate_response(
+    message, generator, tokenizer, 
+    temperature, top_p, max_seq_len, max_batch_size):
     
     with torch.no_grad():
         # tokenize
@@ -38,43 +33,27 @@ def generate_response(message,
         response = tokenizer.batch_decode(generate_ids, skip_special_tokens=True, clean_up_tokenization_spaces=False)[0]
     return response
 
+@app.route('/api/completion', methods=['POST'])
+def call_model():
+    content = request.json
+    message = content["message"][-1]["content"]
+
+    temperature = float(content.get("temperature", 0.7))
+    top_p = float(content.get("top_p", 0.9))
+    max_seq_len = int(content.get("max_seq_len", 1024))
+    max_batch_size = int(content.get("max_batch_size", 32))
+
+    generate_response(message, generator, tokenizer, temperature, top_p, max_seq_len, max_batch_size)
+    response = {"choices": [{"message": {"role": "assistant", "content": message}}]}
+    return jsonify(response)
 
 if __name__ == "__main__":
-    # load model
+
+    # Load model
     generator, tokenizer = load_model(
         ckpt_dir="/home/guangran/decapoda-research/llama-7b-hf",
         tokenizer_path="/home/guangran/decapoda-research/llama-7b-hf")
-    
-    # Set up the server socket
-    server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server_socket.bind(("localhost", 9999))
-    server_socket.listen(1)
-    print("Server started. Listening for connections...")
-    
-    # Accept new connections and handle them
-    client_socket, client_address = server_socket.accept()
-    print(f"New connection from {client_address}")
 
-    # Receive messages from the client and generate responses
-    while True:
-        message = client_socket.recv(1024).decode().strip()
-        print("Received message:", message)
-
-        # Check for termination command
-        if message.lower() == "exit":
-            client_socket, client_address = server_socket.accept()
-            print(f"New connection from {client_address}")
-
-        # Generate a response using Llama
-        response = generate_response(message,
-                                     generator,
-                                     tokenizer
-                                     )
-        print("Generated response:", response)
-
-        # Send the response back to the client
-        client_socket.sendall(response.encode())
-
-    # Clean up
-    client_socket.close()
-    server_socket.close()
+    # Start server
+    app = Flask(__name__)
+    app.run(host='0.0.0.0', port=5330)
