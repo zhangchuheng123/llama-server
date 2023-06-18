@@ -398,9 +398,8 @@ data = {
     "n": 1,
 }
 
-
 port = 5330
 url = 'http://localhost:{port}/api/completion'.format(port=port)
-res = requests.post(url, json=data, headers=headers, timeout=30)
+resp_json = requests.post(url, json=data, headers=headers, timeout=30)
 response = resp_json["choices"][0]["message"]["content"]
 print(response)
