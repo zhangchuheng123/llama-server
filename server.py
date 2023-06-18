@@ -8,7 +8,7 @@ from transformers import AutoTokenizer, LlamaForCausalLM
 from flask import Flask, request, jsonify
 
 app = Flask(__name__)
-device = "cuda:0"
+device = "cuda:1"
 
 # Set up Llama model
 def load_model(ckpt_dir: str, tokenizer_path: str): 
@@ -32,7 +32,7 @@ def generate_response(
         inputs = tokenizer(message, return_tensors="pt")
         # Generate
         inputs = torch.as_tensor(inputs.input_ids, device = torch.device(device))
-        generate_ids = generator.generate(inputs, max_length=max_seq_len, temperature=temperature, top_p = top_p)
+        generate_ids = generator.generate(inputs, max_length=max_seq_len, temperature=temperature, top_p=top_p)
         response = tokenizer.batch_decode(generate_ids, skip_special_tokens=True, clean_up_tokenization_spaces=False)[0]
     return response
 
@@ -46,6 +46,8 @@ def call_model():
     max_seq_len = int(content.get("max_seq_len", 128))
     max_batch_size = int(content.get("max_batch_size", 32))
 
+    print(max_seq_len)
+    
     response = generate_response(message, generator, tokenizer, temperature, top_p, max_seq_len, max_batch_size)
     response = {"choices": [{"message": {"role": "assistant", "content": response}}]}
     return jsonify(response)
@@ -58,4 +60,4 @@ if __name__ == "__main__":
         tokenizer_path="/home/guangran/decapoda-research/llama-7b-hf")
 
     # Start server
-    app.run(host='0.0.0.0', port=5330)
+    app.run(host='0.0.0.0', port=5331)

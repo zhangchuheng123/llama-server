@@ -527,15 +527,10 @@ import pdb
 
 api_key = "653880d85b6e4a209206c263d7c3cc7a"
 headers = {"Content-Type": "application/json", "api-key": api_key}
-data = {
-    "messages": [{"role": "user", "content": short_message}],
-    "max_tokens": 2000,
-    "temperature": 0.7,
-    "n": 1,
-}
+data = {"messages": [{"role": "user", "content": short_message}], "max_seq_len": 5000, "temperature": 0.7, "top_p": 0.9}
 
 pdb.set_trace()
-port = 5330
+port = 5331
 url = 'http://localhost:{port}/api/completion'.format(port=port)
 res = requests.post(url, json=data, headers=headers, timeout=30)
 resp_json = res.json()
