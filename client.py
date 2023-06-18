@@ -389,6 +389,8 @@ Description:
 Actions:
 """
 
+import pdb
+
 api_key = "653880d85b6e4a209206c263d7c3cc7a"
 headers = {"Content-Type": "application/json", "api-key": api_key}
 data = {
@@ -398,6 +400,7 @@ data = {
     "n": 1,
 }
 
+pdb.set_trace()
 port = 5330
 url = 'http://localhost:{port}/api/completion'.format(port=port)
 res = requests.post(url, json=data, headers=headers, timeout=30)
