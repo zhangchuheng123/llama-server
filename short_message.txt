@@ -1,13 +1,6 @@
-You are an HVAC administrator. Your primary objective is to fine-tune the actions to maintain the temperature in each room close to the target temperature, while maximizing the rewards as many as possible.
-
-Currently, outside temperature is lower than the target temperature 22 degree Celsius. To optimize HVAC control, adhere to the following guidelines:
+You are an HVAC administrator. Guidelines:
 1. Actions should be represented as a list, with each integer value ranging from 0 to 100.
 2. The length of the actions list should correspond to the number of rooms, arranged in the same order.
-3. If room temperature is higher than the target temperature, the larger the difference between room temperature and the target temperature, the lower the action should be.
-4. If room temperature is lower than the target temperature, the larger the difference between room temperature and the target temperature, the higher the action should be.
-5. You could find the best actions room by room.
-
-For your reference, 1 demonstration from experts are provided below.
 
 Expert Demonstration 1 
 
@@ -16,84 +9,61 @@ Expert Demonstration 1
 
    The building has 23 rooms in total.
    Currently, temperature in each room is as follows:
-       Room 1: -19 degrees Celsius 
-       Room 2: -3 degrees Celsius 
-       Room 3: -26 degrees Celsius 
-       Room 4: -20 degrees Celsius 
-       Room 5: -30 degrees Celsius 
-       Room 6: -9 degrees Celsius 
-       Room 7: -13 degrees Celsius 
-       Room 8: -35 degrees Celsius 
-       Room 9: -8 degrees Celsius 
-       Room 10: 2 degrees Celsius 
-       Room 11: -31 degrees Celsius 
-       Room 12: -20 degrees Celsius 
-       Room 13: -36 degrees Celsius 
-       Room 14: -4 degrees Celsius 
-       Room 15: -2 degrees Celsius 
-       Room 16: -24 degrees Celsius 
-       Room 17: -20 degrees Celsius 
-       Room 18: -35 degrees Celsius 
-       Room 19: -10 degrees Celsius 
-       Room 20: -18 degrees Celsius 
-       Room 21: -25 degrees Celsius 
-       Room 22: -16 degrees Celsius 
-       Room 23: 21 degrees Celsius 
+      Room 1: -19 degrees Celsius 
+      Room 2: -3 degrees Celsius 
+      Room 3: -26 degrees Celsius 
+      Room 4: -20 degrees Celsius 
+      Room 5: -30 degrees Celsius 
+      Room 6: -9 degrees Celsius 
+      Room 7: -13 degrees Celsius 
+      Room 8: -35 degrees Celsius 
+      Room 9: -8 degrees Celsius 
+      Room 10: 2 degrees Celsius 
+      Room 11: -31 degrees Celsius 
+      Room 12: -20 degrees Celsius 
+      Room 13: -36 degrees Celsius 
+      Room 14: -4 degrees Celsius 
+      Room 15: -2 degrees Celsius 
+      Room 16: -24 degrees Celsius 
+      Room 17: -20 degrees Celsius 
+      Room 18: -35 degrees Celsius 
+      Room 19: -10 degrees Celsius 
+      Room 20: -18 degrees Celsius 
+      Room 21: -25 degrees Celsius 
+      Room 22: -16 degrees Celsius 
+      Room 23: 21 degrees Celsius 
     The external climate conditions are as follows:
-       Outside Temperature: 3 degrees Celsius. 
-       Global Horizontal Irradiance: 0 
-       Ground Temperature: 9 degrees Celsius
-       Occupant Power: 0 KW 
-       Target Temperature: 22 degrees Celsius 
+      Outside Temperature: 3 degrees Celsius. 
+      Global Horizontal Irradiance: 0 
+      Ground Temperature: 9 degrees Celsius
+      Occupant Power: 0 KW 
+      Target Temperature: 22 degrees Celsius 
 
-        Actions: [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100]
-        Outcomes: After taking the above actions, temperature in each room becomes: 
-       Room 1: 5 degree Celsius 
-       Room 2: 7 degree Celsius 
-       Room 3: 3 degree Celsius 
-       Room 4: 5 degree Celsius 
-       Room 5: 6 degree Celsius 
-       Room 6: 5 degree Celsius 
-       Room 7: 10 degree Celsius 
-       Room 8: 11 degree Celsius 
-       Room 9: 3 degree Celsius 
-       Room 10: 2 degree Celsius 
-       Room 11: 4 degree Celsius 
-       Room 12: 5 degree Celsius 
-       Room 13: 4 degree Celsius 
-       Room 14: 8 degree Celsius 
-       Room 15: 10 degree Celsius 
-       Room 16: 3 degree Celsius 
-       Room 17: 2 degree Celsius 
-       Room 18: 4 degree Celsius 
-       Room 19: 6 degree Celsius 
-       Room 20: 4 degree Celsius 
-       Room 21: 8 degree Celsius 
-       Room 22: 10 degree Celsius 
-       Room 23: 3 degree Celsius 
-The action for Room 1 shall be increased as its temperature is lower than the target temperature 22 degree Celsius. 
-The action for Room 2 shall be increased as its temperature is lower than the target temperature 22 degree Celsius. 
-The action for Room 3 shall be increased as its temperature is lower than the target temperature 22 degree Celsius. 
-The action for Room 4 shall be increased as its temperature is lower than the target temperature 22 degree Celsius. 
-The action for Room 5 shall be increased as its temperature is lower than the target temperature 22 degree Celsius. 
-The action for Room 6 shall be increased as its temperature is lower than the target temperature 22 degree Celsius. 
-The action for Room 7 shall be increased as its temperature is lower than the target temperature 22 degree Celsius. 
-The action for Room 8 shall be increased as its temperature is lower than the target temperature 22 degree Celsius. 
-The action for Room 9 shall be increased as its temperature is lower than the target temperature 22 degree Celsius. 
-The action for Room 10 shall be increased as its temperature is lower than the target temperature 22 degree Celsius. 
-The action for Room 11 shall be increased as its temperature is lower than the target temperature 22 degree Celsius. 
-The action for Room 12 shall be increased as its temperature is lower than the target temperature 22 degree Celsius. 
-The action for Room 13 shall be increased as its temperature is lower than the target temperature 22 degree Celsius. 
-The action for Room 14 shall be increased as its temperature is lower than the target temperature 22 degree Celsius. 
-The action for Room 15 shall be increased as its temperature is lower than the target temperature 22 degree Celsius. 
-The action for Room 16 shall be increased as its temperature is lower than the target temperature 22 degree Celsius. 
-The action for Room 17 shall be increased as its temperature is lower than the target temperature 22 degree Celsius. 
-The action for Room 18 shall be increased as its temperature is lower than the target temperature 22 degree Celsius. 
-The action for Room 19 shall be increased as its temperature is lower than the target temperature 22 degree Celsius. 
-The action for Room 20 shall be increased as its temperature is lower than the target temperature 22 degree Celsius. 
-The action for Room 21 shall be increased as its temperature is lower than the target temperature 22 degree Celsius. 
-The action for Room 22 shall be increased as its temperature is lower than the target temperature 22 degree Celsius. 
-The action for Room 23 shall be increased as its temperature is lower than the target temperature 22 degree Celsius. 
+   Actions: [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100]
+   Outcomes: After taking the above actions, temperature in each room becomes: 
+      Room 1: 5 degree Celsius 
+      Room 2: 7 degree Celsius 
+      Room 3: 3 degree Celsius 
+      Room 4: 5 degree Celsius 
+      Room 5: 6 degree Celsius 
+      Room 6: 5 degree Celsius 
+      Room 7: 10 degree Celsius 
+      Room 8: 11 degree Celsius 
+      Room 9: 3 degree Celsius 
+      Room 10: 2 degree Celsius 
+      Room 11: 4 degree Celsius 
+      Room 12: 5 degree Celsius 
+      Room 13: 4 degree Celsius 
+      Room 14: 8 degree Celsius 
+      Room 15: 10 degree Celsius 
+      Room 16: 3 degree Celsius 
+      Room 17: 2 degree Celsius 
+      Room 18: 4 degree Celsius 
+      Room 19: 6 degree Celsius 
+      Room 20: 4 degree Celsius 
+      Room 21: 8 degree Celsius 
+      Room 22: 10 degree Celsius 
+      Room 23: 3 degree Celsius 
 
 
 Please decide opening of the valve in each room based on the following description:
