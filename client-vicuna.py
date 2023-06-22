@@ -1,19 +1,12 @@
 import openai
 openai.api_key = "EMPTY" # Not support yet
-openai.api_base = "http://localhost:8000/v1"
-
-
-with open('full_message.txt', 'r') as f:
-   full_message = f.read()
-
-with open('short_message.txt', 'r') as f:
-   short_message = f.read()
+openai.api_base = "http://localhost:13000/v1"
 
 model = "vicuna-7b-v1.3"
-prompt = short_message
+prompt = "HERE COMES THE PROMPTS:"
 
 # create a completion
-completion = openai.Completion.create(model=model, prompt=prompt, max_tokens=200)
+completion = openai.Completion.create(model=model, prompt=prompt, max_tokens=1000)
 # print the completion
 print(prompt + completion.choices[0].text)
 
